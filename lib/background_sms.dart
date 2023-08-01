@@ -7,7 +7,7 @@ enum SmsStatus { sent, failed }
 class BackgroundSms {
   static const MethodChannel _channel = const MethodChannel('background_sms');
 
-  static Future<SmsStatus> sendMessage(
+  static Future<({SmsStatus status, String id})> sendMessage(
       {required String phoneNumber,
       required String message,
       required int messageId,
@@ -19,10 +19,13 @@ class BackgroundSms {
         "simSlot": simSlot,
         "messageId": messageId,
       });
-      return result == "Sent" ? SmsStatus.sent : SmsStatus.failed;
+      return (
+        status: result!.contains("Sent") ? SmsStatus.sent : SmsStatus.failed,
+        id: result.split(": ")[1]
+      );
     } on PlatformException catch (e) {
       print(e.toString());
-      return SmsStatus.failed;
+      return (status: SmsStatus.failed, id: "0");
     }
   }
 
