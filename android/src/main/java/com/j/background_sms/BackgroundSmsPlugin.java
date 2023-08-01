@@ -51,7 +51,7 @@ public class BackgroundSmsPlugin implements FlutterPlugin, MethodCallHandler {
       String num = call.argument("phone");
       String msg = call.argument("msg");
       Integer simSlot = call.argument("simSlot");
-      Long messageId = call.argument("messageId");
+      Integer messageId = call.argument("messageId");
       sendSMS(num, msg, simSlot, result, messageId);
     }else if(call.method.equals("isSupportMultiSim")) {
       isSupportCustomSim(result);
@@ -68,7 +68,7 @@ public class BackgroundSmsPlugin implements FlutterPlugin, MethodCallHandler {
     }
   }
 
-  private void sendSMS(String num, String msg, Integer simSlot,Result result, Long id) {
+  private void sendSMS(String num, String msg, Integer simSlot,Result result, Integer id) {
     try {
       SmsManager smsManager;
       if (simSlot == null) {
