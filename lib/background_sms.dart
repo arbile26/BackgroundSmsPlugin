@@ -10,12 +10,14 @@ class BackgroundSms {
   static Future<SmsStatus> sendMessage(
       {required String phoneNumber,
       required String message,
+      required int messageId,
       int? simSlot}) async {
     try {
       String? result = await _channel.invokeMethod('sendSms', <String, dynamic>{
         "phone": phoneNumber,
         "msg": message,
-        "simSlot": simSlot
+        "simSlot": simSlot,
+        "messageId": messageId,
       });
       return result == "Sent" ? SmsStatus.sent : SmsStatus.failed;
     } on PlatformException catch (e) {

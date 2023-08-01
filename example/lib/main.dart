@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:background_sms/background_sms.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -22,7 +24,10 @@ class _MyAppState extends State<MyApp> {
 
   _sendMessage(String phoneNumber, String message, {int? simSlot}) async {
     var result = await BackgroundSms.sendMessage(
-        phoneNumber: phoneNumber, message: message, simSlot: simSlot);
+        phoneNumber: phoneNumber,
+        message: message,
+        simSlot: simSlot,
+        messageId: Random().nextInt(100000));
     if (result == SmsStatus.sent) {
       print("Sent");
     } else {
